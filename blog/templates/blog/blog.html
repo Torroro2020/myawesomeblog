@@ -1,6 +1,6 @@
 <!doctype html>
-<html lang="en">
 {% load static %}
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -49,7 +49,7 @@
 <header>
     <nav class="navbar navbar-expand-lg navbar-light fst-italic" style=" background: #efc071">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#"> <strong>My Awesome Blog </strong> </a>
+            <a class="navbar-brand nav-link" href="{% url 'events/home' %}"> <strong>My Awesome Blog </strong> </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -63,7 +63,7 @@
                         <a class="nav-link" target="_blank" rel="noopener noreferrer" href="https://vk.com/tomeartur">Vkontakte</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'showblog' %}">Blog</a>
+                        <a class="nav-link active" href="#">Blog</a>
                     </li>
                 </ul>
             </div>
@@ -71,42 +71,21 @@
     </nav>
 </header>
 
-<main>
+<main style="margin-left: 20px">
 
-    <section class="py-5 text-center container-fluid" style="background: antiquewhite">
-        <div class="row py-lg-5">
-            <div class="col-lg-6 col-md-8 mx-auto">
-                <h1 class="lead text-dark"> Hey there! I'm excited to see you here! You can write me right now! </h1>
-                <p>
-                    <a href="mailto:tomeartur@yandex.ru" class="btn btn-primary my-2">Mail me</a>
-                </p>
-                
-                <img src="{% static 'JKoCX-93Z58.jpg' %}" width="300" height="300" class="img-fluid">
-            </div>
-        </div>
-    </section>
+    <h1 class="pt-4 pb-5"> Recent posts </h1>
+        <br/>
+    {% for post in posts.all %}
+        <a href="{% url 'specific_post' post.id %}"><h2> {{ post.blog_title }} </h2></a>
+        <br/>
+        <img src="{{ post.blog_image.url }}" height="300" width="300" class="img-fluid">
+        <br/>
+        <p>{{ post.get_summary}} </p>
 
-    <div class="album py-5 bg-light">
-        <div class="container">
-
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-
-                {% for event in events.all %}
-
-                <div class="col">
-                    <div class="card shadow-sm">
-                        <img class="card-img-top" src="{{ event.event_image.url }}" />
-                        <div class="card-body">
-                            <p class="card-text">{{ event.event_text }}</p>
-
-                        </div>
-                    </div>
-                </div>
-
-                {% endfor %}
-            </div>
-        </div>
-    </div>
+        {{ post.blog_date }}
+         <br/>
+         <br/>
+    {% endfor %}
 
 </main>
 
